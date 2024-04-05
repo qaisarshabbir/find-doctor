@@ -39,13 +39,13 @@ function doctor_search_shortcode() {
                     </div>
                 </div>
                 <div class="col-2 text-center">
-                    <button type="button" class="btn btn-tab" onclick="getData('get_doctors')">By Doctor Name</button>
+                    <button type="button" class="btn btn-tab" id="tab-doc" onclick="getData('get_doctors', this)">By Doctor Name</button>
                 </div>
                 <div class="col-2 text-center">
-                    <button type="button" class="btn btn-tab" onclick="getData('get_departments')">By Department</button>
+                    <button type="button" class="btn btn-tab" id="tab-dep" onclick="getData('get_departments', this)">By Department</button>
                 </div>
                 <div class="col-2 text-center">
-                    <button type="button" class="btn btn-tab" onclick="getData('get_symptoms')">By Symptom</button>
+                    <button type="button" class="btn btn-tab" id="tab-sym" onclick="getData('get_symptoms', this)">By Symptom</button>
                 </div>
                 <div class="col-2 text-right">
                     <a href="#" id="FindDoctorFilter" class="btn btn-filter disabled"><i class="fas fa-filter"></i> More Filters <span class="badge text-bg-secondary">4</span></a>
@@ -67,7 +67,7 @@ function doctor_search_shortcode() {
                     <div class="col-md-3">
                         <label>Gender</label>
                         <select onchange="genderBasedFilter(this)">
-                            <option value="All" selected>All</option>
+                            <option value="all" selected>All</option>
                             <option value="female">Female</option>
                             <option value="male">Male</option>
                         </select>
@@ -75,7 +75,7 @@ function doctor_search_shortcode() {
                     <div class="col-md-3">
                         <label>Languages Spoken</label>
                         <select id="ddlLanguage" onchange="languageBasedFilter(this)">
-                            <option value="All" selected>All</option>
+                            <option value="all" selected>All</option>
                             <option value="arabic">Arabic</option>
                             <option value="english">English</option>
                             <option value="french">French</option>
@@ -346,12 +346,35 @@ function doctor_search_shortcode() {
             }
         });
 
+        function activeAndDisabledButtons(element) {
+            if (element.id == 'tab-doc') {
+                element.classList.add('active');
+                document.getElementById('tab-sym').classList.remove('active');
+                document.getElementById('tab-dep').classList.remove('active');
+                document.getElementById("FindDoctorFilter").classList.remove('disabled');
+            }else if (element.id == 'tab-dep') {
+                element.classList.add('active');
+                document.getElementById('tab-doc').classList.remove('active');
+                document.getElementById('tab-sym').classList.remove('active');
+                document.getElementById("filter-tab").style.display = 'block';
+                document.getElementById("FindDoctorFilter").classList.add('disabled');
+            }else if (element.id == 'tab-sym') {
+                element.classList.add('active');
+                document.getElementById('tab-doc').classList.remove('active');
+                document.getElementById('tab-dep').classList.remove('active');
+                document.getElementById("filter-tab").style.display = 'block';
+                document.getElementById("FindDoctorFilter").classList.add('disabled');
+            }
+            // console.log(element.id)
+        }
 
-        function getData($endPoint){
+        let globDoctors;
+        function getData($endPoint, element){
             const docNamesContainer = document.getElementById('doc-names-alphabetically');
             const docAlphaContainer = document.getElementById('doc-alphabets');
             docAlphaContainer.innerHTML = '';
             docNamesContainer.innerHTML = '';
+            activeAndDisabledButtons(element);
             // console.log($endPoint)
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
@@ -361,9 +384,7 @@ function doctor_search_shortcode() {
                     if ($endPoint != 'get_doctors'){
                         displayData(response, $endPoint);
                     }else{
-                        // console.log(response)
-                        const docFilters = document.getElementById("FindDoctorFilter");
-                        docFilters.classList.remove('disabled');
+                        globDoctors = response;
                         displayDoctors(response);
                     }
                 } else {
@@ -380,7 +401,7 @@ function doctor_search_shortcode() {
         // function searchDocOjectOnSingleCharector(){
 
         // }
-        let globDoctors;
+        
         function displayDoctors(doctors) {
             // console.log(doctors)
             const tempCharectors = charectors;
@@ -610,28 +631,36 @@ function doctor_search_shortcode() {
         }
 
         function genderBasedFilter(gender){
-            let tempArr = [];
-            for (var doctor of globDoctors) {
-                if (doctor.gender.length > 0 && doctor.gender[0].toLowerCase() == gender.value  ) {
-                    tempArr.push(doctor);
+            if (gender.value == 'all') {
+                displaySortedAscDscDoctors(globDoctors);
+            }else{
+                let tempArr = [];
+                for (var doctor of globDoctors) {
+                    if (doctor.gender.length > 0 && doctor.gender[0].toLowerCase() == gender.value  ) {
+                        tempArr.push(doctor);
+                    }
                 }
+                displaySortedAscDscDoctors(tempArr);
             }
-            displaySortedAscDscDoctors(tempArr);
         }
 
         function languageBasedFilter(language) {
-            let tempArr = [];
-            for (var doctor of globDoctors) {
-                if (doctor.languages.length > 0  ) {
-                    for(let lang of doctor.languages){
-                        if (lang.toLowerCase() == language.value) {
-                            tempArr.push(doctor);
-                            break;
+            if (language.value == 'all') {
+                displaySortedAscDscDoctors(globDoctors);
+            }else{
+                let tempArr = [];
+                for (var doctor of globDoctors) {
+                    if (doctor.languages.length > 0  ) {
+                        for(let lang of doctor.languages){
+                            if (lang.toLowerCase() == language.value) {
+                                tempArr.push(doctor);
+                                break;
+                            }
                         }
                     }
                 }
+                displaySortedAscDscDoctors(tempArr);
             }
-            displaySortedAscDscDoctors(tempArr);
         }
 
         function sortDocFilter(select){
@@ -691,12 +720,13 @@ function doctor_search_shortcode() {
         function displaySortedAscDscDoctors(doctors) {
             const docNamesContainer = document.getElementById('doc-names-alphabetically');
             docNamesContainer.innerHTML = '';
-
             if (doctors.length > 0) {
                 const ul = document.createElement('ul');
                 ul.class = 'sorting-li';
+                // console.log(doctors.length)
 
                 doctors.forEach(doctor => {
+                    // console.log(doctor)
                     const a = document.createElement('a');
                     a.title = doctor.post_title;
                     a.textContent = doctor.post_title;

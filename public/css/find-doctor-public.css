@@ -154,3 +154,8 @@ a.disabled {
   cursor: default;
   color: darkgray;
 }
+
+.active{
+    background-color: #0078bf !important;
+    color: #fff !important;
+}
