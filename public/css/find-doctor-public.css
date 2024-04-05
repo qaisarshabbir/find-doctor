@@ -1,0 +1,156 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+.doctor-search-container {
+    background-color: #f0efef;
+    border-radius: 4px;
+    padding: 15px;
+}
+.doctor-search-box {
+    position: relative;
+}
+.doctor-search-box:after {
+    content: "\f002";
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 800;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+.doctor-search-box input {
+    background-color: white !important;
+}
+.suggestion-dropdown {
+    background: white;
+    border: 1px solid #001e61;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 40px;
+    border-radius: 4px;
+    padding: 20px 10px;
+    z-index: 1;
+    display: none;
+}
+.suggestion-area {
+    border-top: 2px solid #ccc;
+    margin: 0 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.suggestion-area:first-child {
+    border: 0;
+    padding-top: 0;
+}
+.suggestion-dropdown .suggestion-area h2 {
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 14px;
+    color: #4b4b45;
+    font-weight: 700;
+    line-height: 24px;
+    position: relative;
+}
+.suggestion-dropdown .suggestion-area h2 a {
+    position: absolute;
+    right: 0;
+    font-size: 13px;
+    line-height: 24px;
+    color: #0078bf;
+    text-decoration: none;
+    font-weight: 700;
+}
+.suggestion-dropdown .suggestion-area ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.suggestion-dropdown .suggestion-area ul li {
+    line-height: 24px;
+}
+.suggestion-dropdown .suggestion-area ul li a {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    text-decoration: none;
+}
+.doctor-search-container label {
+    float: left;
+    font-size: 14px;
+    color: #4b4b45;
+    font-weight: 700;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.doctor-search-container select {
+    float: left;
+    border: 0;
+    background-color: transparent !important;
+    color: #0078bf !important;
+    font-size: 14px;
+    outline: none;
+    padding: 1px 10px;
+    width: 135px;
+    margin-top: 6px;
+}
+.btn-tab {
+    border: none;
+    padding: 15px 0;
+    font-size: 14px;
+    color: #4b4b45;
+    font-weight: 700;
+    border-radius: 4px;
+    position: relative;
+    width: 150px;
+    line-height: 16px;
+}
+.btn-filter {
+    border: none;
+    line-height: 37px;
+    background-color: #fff;
+    height: 42px;
+}
+.text-bg-secondary {
+    background-color: #6c757d;
+    line-height: 15px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    height: 20px;
+}
+.btn-filter:hover .text-bg-secondary {
+    background-color: #fff;
+    color: #0078bf;
+}
+.btn-tab:hover, .btn-filter:hover {
+    background-color: #0078bf !important;
+    color: #fff !important;
+}
+.filter-tab {
+    -webkit-transition: max-height 1s;
+    -moz-transition: max-height 1s;
+    -ms-transition: max-height 1s;
+    -o-transition: max-height 1s;
+    transition: max-height 1s;
+    overflow: hidden;
+    max-height: 0;
+}
+.show {
+    display: block !important; /* Set the display property to 'block' when the class is present */
+    height: auto;
+    max-height: 300px;
+}
+.sorting-li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.sorting-li li {
+    display: inline-block;
+}
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+  color: darkgray;
+}
