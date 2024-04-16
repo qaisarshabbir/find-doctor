@@ -255,7 +255,7 @@ function doctor_search_shortcode() {
                 }
                 };
 
-                const url = `/wp-json/fine_doc/api/search?q=${encodeURIComponent(input)}`;
+                const url = `/kowaithospital/wp-json/fine_doc/api/search?q=${encodeURIComponent(input)}`;
                 xhr.open('GET', url, true);
                 xhr.send();
             }
@@ -393,7 +393,7 @@ function doctor_search_shortcode() {
             }
             };
 
-            const url = `/wp-json/fine_doc/api/`+$endPoint;
+            const url = `/kowaithospital/wp-json/fine_doc/api/`+$endPoint;
             xhr.open('GET', url, true);
             xhr.send();
         }
@@ -426,7 +426,7 @@ function doctor_search_shortcode() {
 
             if (doctors.length > 0) {
                 const ul = document.createElement('ul');
-                ul.class = 'sorting-li';
+                ul.classList.add('searched-items');
                 // const doctors = suggestions.doctors;
                 // console.log(doctors)
                 doctors.forEach(doctor => {
@@ -558,7 +558,7 @@ function doctor_search_shortcode() {
 
             if (listOfTaxonomies.length > 0) {
                 const ul = document.createElement('ul');
-                ul.class = 'sorting-li';
+                ul.classList.add('searched-items');
                 // const listOfTaxonomies = suggestions.listOfTaxonomies;
                 listOfTaxonomies.forEach(taxonomy => {
                     const a = document.createElement('a');
@@ -567,7 +567,7 @@ function doctor_search_shortcode() {
                     if ($endPoint == 'get_symptoms') {
                         a.href = "/symptom/"+taxonomy.slug;
                     }else{
-                        a.href = "/personnel_category/"+taxonomy.slug;
+                        a.href = "/portfolio_category/"+taxonomy.slug;
                     }
                     const li = document.createElement('li');
                     // li.textContent = doctor.post_title;

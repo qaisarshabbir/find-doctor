@@ -173,7 +173,7 @@ class Find_Doctor_Public {
   	public function getDepartments()
   	{
 		$args = array(
-        	'taxonomy'      => array('personnel_category'),
+        	'taxonomy'      => array('portfolio_category'),
 		    'orderby'       => 'id', 
 		    // 'order'         => 'ASC',
 		    // 'name__like'    => $request['q'],
