@@ -255,7 +255,7 @@ function doctor_search_shortcode() {
                 }
                 };
 
-                const url = `/kowaithospital/wp-json/fine_doc/api/search?q=${encodeURIComponent(input)}`;
+                const url = `/wp-json/fine_doc/api/search?q=${encodeURIComponent(input)}`;
                 xhr.open('GET', url, true);
                 xhr.send();
             }
@@ -393,7 +393,7 @@ function doctor_search_shortcode() {
             }
             };
 
-            const url = `/kowaithospital/wp-json/fine_doc/api/`+$endPoint;
+            const url = `/wp-json/fine_doc/api/`+$endPoint;
             xhr.open('GET', url, true);
             xhr.send();
         }
@@ -567,7 +567,7 @@ function doctor_search_shortcode() {
                     if ($endPoint == 'get_symptoms') {
                         a.href = "/symptom/"+taxonomy.slug;
                     }else{
-                        a.href = "/portfolio_category/"+taxonomy.slug;
+                        a.href = "/doctors_category/"+taxonomy.slug;
                     }
                     const li = document.createElement('li');
                     // li.textContent = doctor.post_title;
